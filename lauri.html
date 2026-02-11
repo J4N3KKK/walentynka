@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Walentynka 💘</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.card {
+    background: rgba(0,0,0,0.25);
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 420px;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+input {
+    padding: 12px;
+    border-radius: 25px;
+    border: none;
+    width: 80%;
+    text-align: center;
+    font-size: 1em;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.yes {
+    background: #ff2e63;
+    color: white;
+}
+
+.no {
+    background: #555;
+    color: white;
+    position: absolute;
+}
+
+.heart {
+    position: absolute;
+    animation: float 6s infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-800px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+    <h1 id="title">Hej Lauri 😏</h1>
+    <p id="question"></p>
+
+    <input id="answer" placeholder="Twoja odpowiedź 💋">
+    <br><br>
+
+    <button class="yes" onclick="checkAnswer()">Sprawdź 😈</button>
+</div>
+
+<script>
+const riddles = [
+    {
+        q: "Co będziemy jeść w Walentynki 🍣?",
+        a: "sushi"
+    },
+    {
+        q: "Kto jest najpiękniejszy na świecie? 😏",
+        a: "laura"
+    },
+    {
+        q: "Czy Lauri zagra zaraz z Jasiem w Dead by Daylight? 🎮",
+        a: "tak"
+    }
+];
+
+let index = 0;
+const question = document.getElementById("question");
+const answer = document.getElementById("answer");
+const card = document.getElementById("card");
+
+question.innerText = riddles[index].q;
+
+function checkAnswer() {
+    if (answer.value.toLowerCase().trim() === riddles[index].a) {
+        index++;
+        answer.value = "";
+
+        if (index < riddles.length) {
+            question.innerText = riddles[index].q;
+        } else {
+            showValentine();
+        }
+    } else {
+        alert("Nieee Lauri 😈 Spróbuj jeszcze raz");
+    }
+}
+
+function showValentine() {
+    card.innerHTML = `
+        <h1>Lauri 💘</h1>
+        <p>Czy zostaniesz moją Walentynką?</p>
+        <button class="yes" onclick="yes()">TAK 😍</button>
+        <button class="no" id="noBtn">Nie 🙄</button>
+    `;
+
+    const noBtn = document.getElementById("noBtn");
+    noBtn.addEventListener("mouseover", moveNo);
+}
+
+function moveNo(e) {
+    const btn = e.target;
+    btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+}
+
+function yes() {
+    card.innerHTML = `
+        <h1>OFICJALNIE ❤️</h1>
+        <p>
+            Lauri + Jasio = 💘<br><br>
+            Sushi ✔️<br>
+            Dead by Daylight ✔️<br>
+            Walentynka ✔️🔥
+        </p>
+    `;
+    hearts();
+}
+
+function hearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 30 + 15 + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
+}
+</script>
+
+</body>
+</html>
